@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/tags/development/</link>
+    <description>Recent content in Development on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PromQL Zine</title>
+      <link>https://infoverload.github.io/2018/08/08/promql-zine/</link>
+      <pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/08/08/promql-zine/</guid>
+      <description>I attended a Zine &amp;amp; Sketchnote Co-Learning Meetup recently and will be be attending PromCon, and so I thought it would be apt to create a zine for the conference.
+I decided to make one on the basics of PromQL, the functional expression query language that comes with Prometheus.
+Here is my first ever zine:
+Zine (Version 1)
+Zines on display</description>
+    </item>
+    
+    <item>
+      <title>RustFest Paris 2018</title>
+      <link>https://infoverload.github.io/2018/06/02/rustfest-paris-2018/</link>
+      <pubDate>Sat, 02 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/06/02/rustfest-paris-2018/</guid>
+      <description>I had the good fortune of attending RustFest recently and, thus, it would be very apt to talk about the Rust programming language. I had heard about Rust around a year ago but never looked too deeply into it because it seemed relatively obscure at the time. The Rust conference and workshop has introduced me to the idioms and intricacies of Rust and now my interest has been piqued! I will outline a couple of things about the language and its ecosystem.</description>
+    </item>
+    
+    <item>
+      <title>How does ping work?</title>
+      <link>https://infoverload.github.io/2018/02/02/how-does-ping-work/</link>
+      <pubDate>Fri, 02 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/02/02/how-does-ping-work/</guid>
+      <description>Chances are that you&amp;rsquo;ve probably used ping for troubleshooting purposes to test whether a host is available or you might have told someone that you&amp;rsquo;ll &amp;ldquo;ping them later&amp;rdquo; since the word has also seeped into common-ish lexicon. But what exactly is ping? Personally I have used it but not given it much thought so I wanted to dive a little deeper on how it works. Here are my findings!</description>
+    </item>
+    
+  </channel>
+</rss>

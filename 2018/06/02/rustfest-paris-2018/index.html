@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>RustFest Paris 2018 &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    2. June 2018
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">RustFest Paris 2018</h1>
+                <div itemprop="articleBody">
+                    <p>I had the good fortune of attending RustFest recently and, thus, it would be very apt to talk about the Rust programming language. I had heard about Rust around a year ago but never looked too deeply into it because it seemed relatively obscure at the time. The Rust conference and workshop has introduced me to the idioms and intricacies of Rust and now my interest has been piqued! I will outline a couple of things about the language and its ecosystem.</p>
+
+<p>Rust is an open-source systems programming language developed at Mozilla. It is meant to have the efficiency and power of a &ldquo;low level&rdquo; language but feels like a &ldquo;high level&rdquo; one. Rust is a compiled language that uses an ahead-of-time compile model. In fact, the compiler is very friendly and acts like a smart pair programmer at your side at all times that helps you write better code.</p>
+
+<p>Rust comes with a nice package manager called Cargo that helps you install Crates. Crates can be found under the registry at Crates.io. Cargo also comes with a build tool and built-in test runner as well as a built-in document generator. When you build your project in release mode ( <code>cargo build –release</code> ), this signifies that you want to compile your code for production and this will take a lot more time to do but will give you much better optimization in the end.</p>
+
+<p>In terms of syntax, Rust can infer some of the types that we want and so we don&rsquo;t always have to specify the types. If the compiler cannot guess with certainty, it will tell you during compile time. Something unique in Rust is that variables are immutable by default. Once we declare a variable and set a value, we are not able to change it. We have to specifically say we want it to be mutable with the mut keyword. Moreover, there are two different types of strings in Rust (String and &amp;str) and how they are handled in memory is the main difference. It turns out that strings are actually really complicated and a lot of other programming languages do a lot of magic to hide it’s complication. Rust exposes this complication with strings.</p>
+
+<p>Rust is not really object-oriented and does not have a concept of class or object, but it uses <code>structs</code>. You can use struct to define your data and then make an impl block to implement the behaviour.</p>
+
+<p>For the more advanced topics, it means diving into the fundamental features of Rust that makes it unique. Rust is a language that was designed to eliminate the supposed tradeoff between control and safety. It was built to prevent crashes and eliminate data races (when you have two threads performing at least one write to the same memory location). It does this through its system of ownership and borrowing. Data has an owner and can be borrowed as long as it is given back. Data can be owned by only one thing at a time. As the sole owner of the data, this means that you can confidently change it and it also gives other things a better understanding of who owns it and when it would be deallocated. This is all a static check since Rust apparently has no runtime.</p>
+
+<p>I noticed that Rust had a lot of similarities to Go, but some of the main differences is that it doesn’t have a garbage collector or a runtime (which, from my understanding, means that it runs directly on the CPU). Rust doesn’t have or need garbage collection because of all the safety features in its model and it has less need for a runtime because it doesn’t have garbage collection. There are still endless advanced topics in Rust that I don’t know yet.</p>
+
+<p>Rust is currently not very widespread and still in a pretty nascent phase (many libraries are not even at version 1.0 yet) but I am interested in following along with its progress. I have heard a lot about its open and friendly community and it was also what I experienced firsthand. Everyone was super friendly and helpful.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                    <a rel="next" href="https://infoverload.github.io/2018/08/08/promql-zine/" id="next">
+                        <span class="nav-title nav-title-next">Newer</span> &rarr;
+                    </a>
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

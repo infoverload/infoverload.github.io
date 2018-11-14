@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Networking on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/categories/networking/</link>
+    <description>Recent content in Networking on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 02 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/categories/networking/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How does ping work?</title>
+      <link>https://infoverload.github.io/2018/02/02/how-does-ping-work/</link>
+      <pubDate>Fri, 02 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/02/02/how-does-ping-work/</guid>
+      <description>Chances are that you&amp;rsquo;ve probably used ping for troubleshooting purposes to test whether a host is available or you might have told someone that you&amp;rsquo;ll &amp;ldquo;ping them later&amp;rdquo; since the word has also seeped into common-ish lexicon. But what exactly is ping? Personally I have used it but not given it much thought so I wanted to dive a little deeper on how it works. Here are my findings!</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogging on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/tags/blogging/</link>
+    <description>Recent content in Blogging on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 26 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/tags/blogging/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Starting a blog using Hugo</title>
+      <link>https://infoverload.github.io/2018/01/26/starting-a-blog-using-hugo/</link>
+      <pubDate>Fri, 26 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/01/26/starting-a-blog-using-hugo/</guid>
+      <description>I thought it would be fun to also start my own blog to document things that I have learned and am curious about and to recap the many conferences that I attend&amp;hellip;and possibly other random things! So I decided to create a static blog with Hugo, the open-source static site generator and my experience with it has been very smooth and painless. It is very quick to set up and there are many pre-made themes to choose from.</description>
+    </item>
+    
+  </channel>
+</rss>

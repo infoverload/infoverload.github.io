@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rustfest on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/tags/rustfest/</link>
+    <description>Recent content in Rustfest on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 02 Jun 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/tags/rustfest/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RustFest Paris 2018</title>
+      <link>https://infoverload.github.io/2018/06/02/rustfest-paris-2018/</link>
+      <pubDate>Sat, 02 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/06/02/rustfest-paris-2018/</guid>
+      <description>I had the good fortune of attending RustFest recently and, thus, it would be very apt to talk about the Rust programming language. I had heard about Rust around a year ago but never looked too deeply into it because it seemed relatively obscure at the time. The Rust conference and workshop has introduced me to the idioms and intricacies of Rust and now my interest has been piqued! I will outline a couple of things about the language and its ecosystem.</description>
+    </item>
+    
+  </channel>
+</rss>

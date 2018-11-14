@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>How does ping work? &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    2. February 2018
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">How does ping work?</h1>
+                <div itemprop="articleBody">
+                    
+
+<p>Chances are that you&rsquo;ve probably used ping for troubleshooting purposes to test whether a host is available or you might have told someone that you&rsquo;ll &ldquo;ping them later&rdquo; since the word has also seeped into common-ish lexicon.  But what exactly is ping?  Personally I have used it but not given it much thought so I wanted to dive a little deeper on how it works.  Here are my findings!</p>
+
+<p>Ping is a piece of networking system software that is used to test connectivity between a client and a host. You can use it to verify that an IP address exists and can accept requests.  It turns out that its name was contrived from &ldquo;Packet Internet Groper&rdquo; and was meant to emulate the sound emitted from sonar technology that sends sound waves and listens back for the echo in order to determine whether there are objects under water. In order to understand what ping is doing, it would be good to familiarize oneself with network sockets and the Internet Control Message Protocol.</p>
+
+<h3 id="sockets">Sockets</h3>
+
+<p>A network socket is an interface for talking to networks that is implemented as part of most operating system kernels (especially Unix-based kernels). Sockets allow you to open network connections and read/write to them as if they were ordinary files, which fits into the Unix philosophy that &lsquo;everything is a file&rsquo;. Although it seems like a standard feature, sockets themselves are independent of the underlying networking protocols used across the wire. It may be pretty much the standard but is actually just one particular interface that can talk to networks.  It is possible to come up with other interfaces that also talk to networks that aren&rsquo;t exactly like sockets.</p>
+
+<p>A typical socket is uniquely identified by an IP address, a port number, and a communications protocol. Sockets are available in different flavours (each with its own purpose) and the type of socket that is relevant for understanding how ping works is the raw socket.  A raw socket can be viewed as kind of an empty open-ended software object that is not even identified by an IP address or port number.  You can stuff all kinds of raw network packets in there that do not rely on IPs or ports or any protocol-specific formatting.  The raw socket allows you to send/receive data while bypassing the normal protocol stack by allowing you to directly access lower level protocols. This means that a raw socket receives unextracted packets. This also makes the test simple, fast, and effective.</p>
+
+<h3 id="internet-control-message-protocol">Internet Control Message Protocol</h3>
+
+<p>The next thing to understand is the Internet Control Message Protocol, which is one of the many protocols in the Internet protocol suite. It differs from other transport protocols in that it does not have a concept of a port since it is not used between programs but between hosts as a whole. It is also not typically used to exchange data. ICMP packets are sent directly over IP and are not encapsulated in UDP or TCP. The port only comes up as a further differentiating field within UDP and TCP.</p>
+
+<p>ICMP is a bit of an odd one out in terms of where it fits on the networking model because it is used to manage IP itself too in a way so sometimes it&rsquo;s counted into the same layer as IP itself. It is halfway network layer, halfway above, since it is transferred via IP.</p>
+
+<p>ICMP has different message types, including an Echo Request and an Echo Reply, which are very relevant to ping!
+So when we issue the ping command followed by a hostname, a raw socket is opened that connects to the remote host and an ICMP Echo Request packet is sent to it.  The remote host sends back an ICMP Echo Reply packet.
+Interestingly, it is the responding host&rsquo;s OS kernel that does the Echo Reply directly and so no application is involved that would use sockets. We can think of ICMP Echo Reply handling as an automated thing that happens in the kernel, without involving a particular process.</p>
+
+<h3 id="result">Result</h3>
+
+<p>Ping has a very simple syntax (ping domain_name) and also has a fairly straightforward output.</p>
+
+<p>Issuing</p>
+
+<pre><code>ping 1.1.1.1
+</code></pre>
+
+<p>will result in something like</p>
+
+<pre><code>PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
+64 bytes from 1.1.1.1: icmp_seq=1 ttl=56 time=49.3 ms
+64 bytes from 1.1.1.1: icmp_seq=2 ttl=56 time=42.1 ms
+64 bytes from 1.1.1.1: icmp_seq=3 ttl=56 time=57.9 ms
+
+</code></pre>
+
+<p>Hitting Ctrl+C will give us more information</p>
+
+<pre><code>--- 1.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 42.149/49.811/57.968/6.467 ms
+</code></pre>
+
+<p>There is a lot of information in the output of ping, but I will just highlight a few things.</p>
+
+<p><code>time=? ms</code></p>
+
+<p>This refers to the time it took between sending a request and receiving a reply, in other words, the roundtrip time. This can depend on factors such as how close you are to the server and how many networking equipment is between you and the server.</p>
+
+<p><code>? packets transmitted, ? received</code></p>
+
+<p>Packets should always arrive at its destination, but failures can always happen. Ping will tell you how many packets have been sent and how many have been received so that you can be informed of the health of the connection.</p>
+
+<p>You can use Wireshark to dissect ICMP packets and check out its packet structure:</p>
+
+<p><img src="https://i.imgur.com/3IivFkV.png" alt="Wireshark Ping" /></p>
+
+<p>These are all my findings so far on ping!</p>
+
+<p>Here is my attempt at trying to graphically depict the process:</p>
+
+<p><img src="https://i.imgur.com/wJebLai.jpg" alt="Sketchnote Ping" /></p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                    <a rel="next" href="https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/" id="next">
+                        <span class="nav-title nav-title-next">Newer</span> &rarr;
+                    </a>
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/01/26/starting-a-blog-using-hugo/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
