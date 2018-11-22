@@ -26,7 +26,7 @@
       <pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://infoverload.github.io/2018/08/08/promql-zine/</guid>
-      <description>I attended a Zine &amp;amp; Sketchnote Co-Learning Meetup recently and will be be attending PromCon, and so I thought it would be apt to create a zine for the conference.
+      <description>I attended a Zine &amp;amp; Sketchnote Co-Learning Meetup recently and will be attending PromCon, and so I thought it would be apt to create a zine for the conference.
 I decided to make one on the basics of PromQL, the functional expression query language that comes with Prometheus.
 Here is my first ever zine:
 enlarge</description>
