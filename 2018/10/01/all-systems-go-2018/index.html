@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>All Systems Go! 2018 &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    1. October 2018
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">All Systems Go! 2018</h1>
+                <div itemprop="articleBody">
+                    <p>I have always been a fan and user of open-source software and enjoy running Linux on my laptop, so I was pretty stoked to learn about and be able to attend <a href="https://all-systems-go.io/">All Systems Go!</a>, a conference focused on foundational user-space Linux technologies,  this past weekend.  It was unlike a lot of conferences that I have attended in the past and a lot of the topics were over my head, but I met a lot of nice people and learned about a lot of things that I could dive deeper into afterwards and I really enjoyed the small community atmosphere.   The themes of the talks seemed to be containers, systemd (a system and service manager for Linux), and BPF (which is supposed to <a href="https://cilium.io/blog/2018/04/17/why-is-the-kernel-community-replacing-iptables/">replace</a> iptables).   I also sensed a lot of excitement over <a href="https://flatpak.org/">Flatpak</a> (which provides a sandbox environment in which users can run applications in isolation from the rest of the system).</p>
+
+<p>I will highlight one of the talks that I found interesting:</p>
+
+<p>Dan Walsh from RedHat gave a presentation about replacing Docker with Podman.  He is on the team that develops container engines and worked on taking apart what Docker did into a series of sub-components.  Why do this?  Docker has popularized the concept of containers to the point where people often use the terms interchangeably (like Kleenex!), but containers are actually processes created from combining a bunch of Linux kernel features together and Docker is just one way of managing containers and he believes that its popularity can also be a hindrance to innovation.</p>
+
+<p>Dan ran through six items that are necessary in order to experiment with container engines:<br />
+- a standard definition of what makes up a container image
+    - (the <a href="https://www.opencontainers.org/">Open Container Initiative</a> has standardized what it means to be a container image)
+- a mechanism to pull images from a container registry to the host
+- the ability to explode images onto <a href="https://drawings.jvns.ca/copyonwrite/">CopyOnWrite</a> file systems on disk
+- a standard mechanism for running a container
+- a standard way to setup networking for containers (Container Networking Interface)
+- a tool to monitor containers</p>
+
+<p>Podman is a new tool that works with containers differently than Docker.  It can run and manage pods (a process that has one or more containers on them) as well as regular containers and does it all without a daemon.  Podman is written in Go and basically uses the same command line interface as Docker. You can just set an alias ( alias docker = &lsquo;podman&rsquo;  ).  It also supports the Dockerfile format and OverlayFS, a union-mount file system which facilitates the layered building blocks important to Docker images. It is part of the <a href="https://github.com/containers/libpod">libpod</a> effort, a library that allows other tools to manage pods/containers, and is its default CLI tool.</p>
+
+<p>The Docker daemon runs as root by default because that is necessary in order to create new <a href="https://jvns.ca/blog/2016/10/10/what-even-is-a-container/">cgroups</a> and many commands within the container expect to be able to alter the filesystem (i.e. when using apt, yum, etc. to install packages). Normally, only the root user can create another root user process and not run into problems with file permissions and ownership. Setting up networking also requires root access if you don&rsquo;t want to use tricks and workarounds that can have performance impacts.</p>
+
+<p>Podman does not run as root by default and allows one to use the Docker CLI without such privileges.  It does this by taking advantage of the user namespace support in the Linux kernel. This is a feature that enables privilege isolation and user identification across different processes. If you give a container a completely new user namespace, it can have its own internal/virtual root user which is separate from the host system&rsquo;s root user. Root processes could then be run in a container without having to have root on the system.</p>
+
+<p>According to Dan, Podman is different because it does not run a “big fat daemon”.  Running a daemon in Linux is not generally wrong, but may be viewed as overkill for when you just want to containerize some processes.  The Podman model uses <a href="https://github.com/opencontainers/runtime-spec/blob/master/spec.md">OCI runtimes</a> to launch the container like Docker, but the processes are direct children of the Podman process (i.e. <a href="http://www-h.eng.cam.ac.uk/help/tpl/unix/fork.html">fork-exec model</a>), with cgroups still in control of the container processes.  There can also be proper integration with systemd by putting Podman into a <a href="https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files">unit</a> file.</p>
+
+<p>Podman is still in development and has a lot of items on its roadmap.  For now, it does not support healthchecks, Docker volumes, docker-compose, among other things.  Overall,  Podman seems like a cool idea and it is good that people are thinking up new ways to innovate with containers with the mindset to start with high security first.  It will be interesting to follow along with its progress.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/08/08/promql-zine/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
