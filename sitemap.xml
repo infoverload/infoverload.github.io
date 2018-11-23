@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://infoverload.github.io/2018/10/01/all-systems-go-2018/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/2018/08/08/promql-zine/</loc>
     <lastmod>2018-08-08T00:00:00+00:00</lastmod>
   </url>
@@ -28,13 +33,13 @@
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/tags/blogging/</loc>
+    <loc>https://infoverload.github.io/categories/blogging/</loc>
     <lastmod>2018-01-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/categories/blogging/</loc>
+    <loc>https://infoverload.github.io/tags/blogging/</loc>
     <lastmod>2018-01-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -52,14 +57,32 @@
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/tags/development/</loc>
-    <lastmod>2018-08-08T00:00:00+00:00</lastmod>
+    <loc>https://infoverload.github.io/categories/conferences/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/tags/conferences/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/categories/containers/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://infoverload.github.io/categories/development/</loc>
     <lastmod>2018-08-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/tags/development/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -71,6 +94,24 @@
   
   <url>
     <loc>https://infoverload.github.io/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/categories/linux/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/tags/linux/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/categories/monitoring/</loc>
     <lastmod>2018-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -82,25 +123,19 @@
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/categories/monitoring/</loc>
-    <lastmod>2018-08-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://infoverload.github.io/tags/mozilla/</loc>
     <lastmod>2018-06-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/tags/networking/</loc>
+    <loc>https://infoverload.github.io/categories/networking/</loc>
     <lastmod>2018-02-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/categories/networking/</loc>
+    <loc>https://infoverload.github.io/tags/networking/</loc>
     <lastmod>2018-02-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -119,7 +154,7 @@
   
   <url>
     <loc>https://infoverload.github.io/post/</loc>
-    <lastmod>2018-08-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -130,13 +165,13 @@
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/tags/rust/</loc>
+    <loc>https://infoverload.github.io/categories/rust/</loc>
     <lastmod>2018-06-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/categories/rust/</loc>
+    <loc>https://infoverload.github.io/tags/rust/</loc>
     <lastmod>2018-06-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -160,13 +195,13 @@
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/tags/zines/</loc>
+    <loc>https://infoverload.github.io/categories/zines/</loc>
     <lastmod>2018-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/categories/zines/</loc>
+    <loc>https://infoverload.github.io/tags/zines/</loc>
     <lastmod>2018-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

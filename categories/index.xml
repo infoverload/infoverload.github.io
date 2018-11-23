@@ -21,11 +21,38 @@
     </item>
     
     <item>
+      <title>Conferences</title>
+      <link>https://infoverload.github.io/categories/conferences/</link>
+      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/categories/conferences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Containers</title>
+      <link>https://infoverload.github.io/categories/containers/</link>
+      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/categories/containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Development</title>
       <link>https://infoverload.github.io/categories/development/</link>
       <pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://infoverload.github.io/categories/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://infoverload.github.io/categories/linux/</link>
+      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/categories/linux/</guid>
       <description></description>
     </item>
     
