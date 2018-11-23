@@ -30,18 +30,9 @@
     </item>
     
     <item>
-      <title>Conferences</title>
-      <link>https://infoverload.github.io/tags/conferences/</link>
-      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://infoverload.github.io/tags/conferences/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Development</title>
       <link>https://infoverload.github.io/tags/development/</link>
-      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://infoverload.github.io/tags/development/</guid>
       <description></description>
@@ -53,15 +44,6 @@
       <pubDate>Sat, 03 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://infoverload.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linux</title>
-      <link>https://infoverload.github.io/tags/linux/</link>
-      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://infoverload.github.io/tags/linux/</guid>
       <description></description>
     </item>
     
