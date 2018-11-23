@@ -88,14 +88,16 @@
 
 <p>Dan Walsh from RedHat gave a presentation about replacing Docker with Podman.  He is on the team that develops container engines and worked on taking apart what Docker did into a series of sub-components.  Why do this?  Docker has popularized the concept of containers to the point where people often use the terms interchangeably (like Kleenex!), but containers are actually processes created from combining a bunch of Linux kernel features together and Docker is just one way of managing containers and he believes that its popularity can also be a hindrance to innovation.</p>
 
-<p>Dan ran through six items that are necessary in order to experiment with container engines:<br />
-- a standard definition of what makes up a container image
-    - (the <a href="https://www.opencontainers.org/">Open Container Initiative</a> has standardized what it means to be a container image)
-- a mechanism to pull images from a container registry to the host
-- the ability to explode images onto <a href="https://drawings.jvns.ca/copyonwrite/">CopyOnWrite</a> file systems on disk
-- a standard mechanism for running a container
-- a standard way to setup networking for containers (Container Networking Interface)
-- a tool to monitor containers</p>
+<p>Dan ran through six items that are necessary in order to experiment with container engines:</p>
+
+<pre><code>1. A standard definition of what makes up a container image 
+(the [Open Container Initiative](https://www.opencontainers.org/) has standardized what it means to be a container image)
+2. A mechanism to pull images from a container registry to the host
+3. The ability to explode images onto [CopyOnWrite](https://drawings.jvns.ca/copyonwrite/) file systems on disk
+4. A standard mechanism for running a container
+5. A standard way to setup networking for containers (Container Networking Interface)
+6. A tool to monitor containers
+</code></pre>
 
 <p>Podman is a new tool that works with containers differently than Docker.  It can run and manage pods (a process that has one or more containers on them) as well as regular containers and does it all without a daemon.  Podman is written in Go and basically uses the same command line interface as Docker. You can just set an alias ( alias docker = &lsquo;podman&rsquo;  ).  It also supports the Dockerfile format and OverlayFS, a union-mount file system which facilitates the layered building blocks important to Docker images. It is part of the <a href="https://github.com/containers/libpod">libpod</a> effort, a library that allows other tools to manage pods/containers, and is its default CLI tool.</p>
 
