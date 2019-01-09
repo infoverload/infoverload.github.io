@@ -6,18 +6,18 @@
     <description>Recent content in Breadmaking on INFOVERLOAD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://infoverload.github.io/tags/breadmaking/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Monitoring Sourdough Starters with Prometheus</title>
-      <link>https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/</link>
-      <pubDate>Sat, 03 Mar 2018 00:00:00 +0000</pubDate>
+      <link>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</link>
+      <pubDate>Tue, 11 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/</guid>
-      <description>WIP :)</description>
+      <guid>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</guid>
+      <description>I have many different interests, including baking, open-source software, and more recently, systems monitoring and learning Go. As a way for me to expand my practical knowledge on each item, I devised a fun little project that leverages sensors, Raspberry Pis, and Prometheus to improve my sourdough breadmaking process. I will explain the inspiration behind it, go through the steps I took to set up the project, and detail what I learned.</description>
     </item>
     
   </channel>

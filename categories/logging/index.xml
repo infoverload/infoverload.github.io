@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Logging on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/categories/logging/</link>
+    <description>Recent content in Logging on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/categories/logging/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Exploring Docker Logs</title>
+      <link>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</guid>
+      <description>The mechanics of Docker logs are, by nature, quite different from VM logs and managing Docker logs can be complicated due to its dynamic and ephemeral nature. In the Docker universe, there are different types of logs to be mindful of: logs from the containerized applications and logs from the Docker daemon. In order to gain insight into the health of your containers, you need to understand the structure of Docker logs and what it tells you.</description>
+    </item>
+    
+  </channel>
+</rss>

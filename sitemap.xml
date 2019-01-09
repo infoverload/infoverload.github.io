@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</loc>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/2018/10/01/all-systems-go-2018/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
   </url>
@@ -18,8 +23,13 @@
   </url>
   
   <url>
-    <loc>https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/</loc>
-    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <loc>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</loc>
+    <lastmod>2018-04-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</loc>
+    <lastmod>2018-03-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -30,6 +40,12 @@
   <url>
     <loc>https://infoverload.github.io/2018/01/26/starting-a-blog-using-hugo/</loc>
     <lastmod>2018-01-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/categories/api/</loc>
+    <lastmod>2018-03-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -46,13 +62,13 @@
   
   <url>
     <loc>https://infoverload.github.io/tags/breadmaking/</loc>
-    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://infoverload.github.io/categories/</loc>
-    <lastmod>2018-01-26T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -75,8 +91,14 @@
   </url>
   
   <url>
+    <loc>https://infoverload.github.io/tags/containers/</loc>
+    <lastmod>2018-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/categories/development/</loc>
-    <lastmod>2018-08-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,14 +109,26 @@
   </url>
   
   <url>
+    <loc>https://infoverload.github.io/categories/docker/</loc>
+    <lastmod>2018-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/tags/docker/</loc>
+    <lastmod>2018-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/tags/golang/</loc>
-    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://infoverload.github.io/</loc>
-    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -111,8 +145,14 @@
   </url>
   
   <url>
+    <loc>https://infoverload.github.io/categories/logging/</loc>
+    <lastmod>2018-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/categories/monitoring/</loc>
-    <lastmod>2018-08-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -142,7 +182,7 @@
   
   <url>
     <loc>https://infoverload.github.io/tags/open-source/</loc>
-    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -154,13 +194,13 @@
   
   <url>
     <loc>https://infoverload.github.io/post/</loc>
-    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://infoverload.github.io/tags/prometheus/</loc>
-    <lastmod>2018-08-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

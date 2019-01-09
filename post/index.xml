@@ -6,10 +6,19 @@
     <description>Recent content in Posts on INFOVERLOAD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://infoverload.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Monitoring Sourdough Starters with Prometheus</title>
+      <link>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</link>
+      <pubDate>Tue, 11 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</guid>
+      <description>I have many different interests, including baking, open-source software, and more recently, systems monitoring and learning Go. As a way for me to expand my practical knowledge on each item, I devised a fun little project that leverages sensors, Raspberry Pis, and Prometheus to improve my sourdough breadmaking process. I will explain the inspiration behind it, go through the steps I took to set up the project, and detail what I learned.</description>
+    </item>
     
     <item>
       <title>All Systems Go! 2018</title>
@@ -42,12 +51,22 @@ enlarge</description>
     </item>
     
     <item>
-      <title>Monitoring Sourdough Starters with Prometheus</title>
-      <link>https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/</link>
-      <pubDate>Sat, 03 Mar 2018 00:00:00 +0000</pubDate>
+      <title>Exploring Docker Logs</title>
+      <link>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://infoverload.github.io/2018/03/03/monitoring-sourdough-starters-with-prometheus/</guid>
-      <description>WIP :)</description>
+      <guid>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</guid>
+      <description>The mechanics of Docker logs are, by nature, quite different from VM logs and managing Docker logs can be complicated due to its dynamic and ephemeral nature. In the Docker universe, there are different types of logs to be mindful of: logs from the containerized applications and logs from the Docker daemon. In order to gain insight into the health of your containers, you need to understand the structure of Docker logs and what it tells you.</description>
+    </item>
+    
+    <item>
+      <title>Exploring the Docker API</title>
+      <link>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</guid>
+      <description>In this post, we are going to explore Docker&amp;rsquo;s API and see what we can do with it!
+Docker has become a popular solution for containerization needs and provide a lot of functionality surrounding run-of-the-mill tasks such as building images, running containers, and managing Docker on your machine. These are commonly done through Docker’s command line interface, which is actually a client that consumes a remote REST API provided by the Docker daemon.</description>
     </item>
     
     <item>

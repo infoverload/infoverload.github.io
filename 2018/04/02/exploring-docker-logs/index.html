@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Exploring Docker Logs &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    2. April 2018
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Exploring Docker Logs</h1>
+                <div itemprop="articleBody">
+                    
+
+<p>The mechanics of Docker logs are, by nature, quite different from VM logs and managing Docker logs can be complicated due to its dynamic and ephemeral nature. In the Docker universe, there are different types of logs to be mindful of: logs from the containerized applications and logs from the Docker daemon. In order to gain insight into the health of your containers, you need to understand the structure of Docker logs and what it tells you. It can give you a full picture of what is happening at every layer of the stack. Once all the logs have been collected and we have access to them, how do we make use of them and interpret the results?  This post aims to give an overview of Docker logs, it’s structure, and what exactly it tells us.</p>
+
+<h3 id="basics">Basics</h3>
+
+<p>Docker logs are the console output of running containers. We get the <code>stdout</code> and <code>stderr</code> streams of processes running in a container. Most official Docker images log to console.</p>
+
+<p>Anything written by a container on <code>stdout</code> and <code>stderr</code> is collected by the docker engine and sent to the logging driver. This may contain startup messages if something is not correctly configured and access-log typed messages that are structured with IP addresses, timestamps, and status code.</p>
+
+<p>To view a container’s logs, identify the container ID or the image name and then type:</p>
+
+<p><code>docker logs [OPTIONS] CONTAINER</code></p>
+
+<p>An example output:</p>
+
+<pre><code>172.17.0.1 - - [26/Dec/2017:07:25:23 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/63.0.3239.84 Chrome/63.0.3239.84 Safari/537.36&quot; &quot;-&quot;
+2017/12/26 07:25:23 [error] 7#7: *1 open() &quot;/usr/share/nginx/html/favicon.ico&quot; failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: &quot;GET /favicon.ico HTTP/1.1&quot;, host: &quot;172.17.0.2&quot;, referrer: &quot;http://172.17.0.2/&quot;
+</code></pre>
+
+<p>If the default logging driver is used, Docker logs can be found under:</p>
+
+<pre><code>/var/lib/docker/containers/&lt;container id&gt;/&lt;container id&gt;-json.log
+</code></pre>
+
+<p>To find the specific location of Docker logs, type:
+<code>docker inspect CONTAINER | grep LogPath</code></p>
+
+<p>An example output:</p>
+
+<pre><code>&quot;LogPath&quot;: &quot;/var/lib/docker/containers/61967306d3ee8855ec7ee45ae6cc4ec08ebf7e61fcacedfc096740bdc637ed92/61967306d3ee8855ec7ee45ae6cc4ec08ebf7e61fcacedfc096740bdc637ed92-json.log&quot;	
+</code></pre>
+
+<h3 id="logging-drivers">Logging drivers</h3>
+
+<p>The Docker engine provides various logging drivers that determine where logs are sent or written to.  The default driver for Docker logs is “json-file”, which writes the logs to local files on the Docker host in json format, and allows them to be viewed on the console with the CLI tool.  If the default driver is used, the logs are removed upon removal of the container.  There are other logging drivers that allow Docker logs to be sent via the driver (without parsing) to a remote destination.  Some examples are syslog, gelf, fluentd, journald. A log driver can be set up for each container, which specifies where logs should go for that particular container. A global daemon-wide setting for Docker can also be created.</p>
+
+<p>To set a logging driver for a container, this would be done with the <code>--log-driver</code> option:</p>
+
+<p><code>docker run --log-driver=DRIVERNAME</code></p>
+
+<p>To set extra options, use <code>--log-opt</code>.  For example, when using the syslog driver, the address of the remote syslog server can be set:</p>
+
+<p><code>docker run --log-driver=syslog --log-opt=syslog-address=ADDRESS</code></p>
+
+<p>When one of these drivers is in use, the Docker logs are shipped via the driver to a remote destination and the logs are not on the local Docker host. Thus, the CLI tool to display logs will not work anymore since Docker does not know how to retrieve the logs from these systems.</p>
+
+<p>For example, the syslog protocol only defines how to send logs to a remote logger, but not how to access them. With other drivers, once the logs are sent to a particular logging system, they are outside of Docker&rsquo;s reach.</p>
+
+<h3 id="structure-of-docker-container-logs-and-its-contents">Structure of Docker container logs and its contents</h3>
+
+<p>Anything written by a container on <code>stdout</code> and <code>stderr</code> is collected by the Docker engine and sent to the logging driver.  The logs contain the actual message output plus a bunch of metadata (which becomes very important at large scale)</p>
+
+<p>Each line of the log consists of a timestamp (with date, full year, and down to milliseconds), a string, and perhaps an origin (<code>stdout</code> vs <code>stderr</code>).</p>
+
+<p>An example output:</p>
+
+<pre><code>172.17.0.1 - - [24/Apr/2018:07:25:23 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/63.0.3239.84 Chrome/63.0.3239.84 Safari/537.36&quot; &quot;-&quot;
+2018/04/24 07:25:23 [error] 7#7: *1 open() &quot;/usr/share/nginx/html/favicon.ico&quot; failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: &quot;GET /favicon.ico HTTP/1.1&quot;, host: &quot;172.17.0.2&quot;, referrer: &quot;http://172.17.0.2/&quot;
+</code></pre>
+
+<p>Another example output:</p>
+
+<pre><code>2018-04-24T06:40:35.359+0000 I CONTROL  [initandlisten] MongoDB starting : port=27017 dbpath=/data/db 64-bit
+ 2018-04-24T06:40:35.359+0000 I CONTROL  [initandlisten] db version v3.6.3
+
+ 2018-04-24T06:40:35.360+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+</code></pre>
+
+<p>The log output may be different depending on what logging driver is in use.  For example, priority (i.e. debug, warning, error, info) and the PID (process name or process ID) are informations that exist for syslog, but not for container output. If you use an advanced logging driver like gelf, a lot of container information will be added and every log message is a dict.</p>
+
+<p>The <code>--details</code> flag will add on extra attributes, such as environment variables and labels, provided to <code>--log-opt</code> when creating the container.</p>
+
+<p>An example:</p>
+
+<p><code>docker run -d --log-opt tag=hi=what,day=wednesday alpine echo hello world</code></p>
+
+<pre><code>c93bf3bcedc9a87082123bbd0d17f21d7e876f8c593da129277e931b8890a4d0
+</code></pre>
+
+<p><code>docker logs c93b</code></p>
+
+<pre><code>hello world
+</code></pre>
+
+<p><code>docker logs c93b --details</code></p>
+
+<pre><code>tag=hi%3Dwhat%2Cday%3Dwednesday hello world
+</code></pre>
+
+<h3 id="docker-daemon-logs">Docker daemon logs</h3>
+
+<p>Docker daemon logs offers insight into the state of the Docker service as a whole.  It logs two types of events: commands sent to the daemon through Docker’s Remote API and events that occur as part of the daemon’s normal operation.</p>
+
+<p>Viewing Docker daemon logs is quite different from viewing logs from the containerized applications.  It depends on your operating system.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                    <a rel="next" href="https://infoverload.github.io/2018/06/02/rustfest-paris-2018/" id="next">
+                        <span class="nav-title nav-title-next">Newer</span> &rarr;
+                    </a>
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/03/02/exploring-the-docker-api/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

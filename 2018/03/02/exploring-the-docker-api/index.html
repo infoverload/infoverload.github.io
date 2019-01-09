@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Exploring the Docker API &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    2. March 2018
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Exploring the Docker API</h1>
+                <div itemprop="articleBody">
+                    
+
+<p>In this post, we are going to explore Docker&rsquo;s API and see what we can do with it!</p>
+
+<p>Docker has become a popular solution for containerization needs and provide a lot of functionality surrounding run-of-the-mill tasks such as building images, running containers, and managing Docker on your machine. These are commonly done through Docker’s command line interface, which is actually a client that consumes a remote REST API provided by the Docker daemon.</p>
+
+<p>The Docker REST API can replace the remote command line interface and you can pretty much do anything with Docker through it. By working with the remote API more directly, Docker can be leveraged by other tools and can be controlled from a number of environments instead of just from the shell.</p>
+
+<p>It would be interesting to note that in the Docker universe, there are more APIs available, namely the Docker Registry API (which allows you to interact with the Docker image registry but does not have access to user accounts) and the Docker Hub API (which is a simple REST API that allows you to interact with the Docker Hub). This post will not go into detail for these APIs and will only focus on the API that works with the Docker daemon.</p>
+
+<p>Docker was designed for automation and programmability and the Docker REST API is unusual in some ways because unlike most APIs, you don&rsquo;t request data and get it back; it works more like a remote call. With Docker’s REST API, you can interact with Docker through code and create useful tooling. This post will explore how to get set up and some of the ways you can make use of this RESTful API.</p>
+
+<h3 id="versioning">Versioning</h3>
+
+<p>The API version gets updated when new features are added and it is backwards-compatible, which means that you don’t have to worry about updating your previous code unless you want to leverage the new features. When choosing an API version, keep in mind that the Docker client won’t know about new features or any deprecated endpoints in the Docker daemon if it is older than the daemon version. On the flip side, the Docker client could potentially make requests at endpoints that the Docker daemon is not aware of if it is newer than the daemon version.</p>
+
+<p>Type <code>docker version</code> to see the highest API version supported by the client and the daemon:</p>
+
+<pre><code>Client:
+Version: 18.03.1-ce
+API version: 1.37
+Go version: go1.9.5
+Git commit: 9ee9f40
+Built: Thu Apr 26 07:17:20 2018
+OS/Arch: linux/amd64
+Experimental: false
+Orchestrator: swarm
+
+Server:
+Engine:
+Version: 18.03.1-ce
+API version: 1.37 (minimum version 1.12)
+Go version: go1.9.5
+Git commit: 9ee9f40
+Built: Thu Apr 26 07:15:30 2018
+OS/Arch: linux/amd64
+Experimental: false
+</code></pre>
+
+<h3 id="setting-up-the-api">Setting Up the API</h3>
+
+<p>By default, the Docker daemon is configured to listen on a UNIX socket (which allows data transfer between processes on the same system) and the API can be accessed via this socket if you don’t want to tinker with the configuration files. In order to interact with the Docker REST API over a network, you can configure Docker (by editing it’s upstart file) to listen on a TCP/IP socket on a port on localhost. Once this is configured, you can use an HTTP client like cURL to interact with the Docker API.</p>
+
+<h3 id="docker-remote-api-basics">Docker Remote API Basics</h3>
+
+<p>Here are some simple examples of how you can use Docker’s REST API with cURL to interact with images and containers:</p>
+
+<p>To get a list of images:  <code>GET /images/json</code></p>
+
+<pre><code>$ curl http://localhost:5555/images/json
+</code></pre>
+
+<p>To list containers: <code>GET /containers/json</code></p>
+
+<pre><code>$ curl http://localhost:5555/containers/json
+</code></pre>
+
+<p>To start a container: <code>POST /containers/{id}/start</code></p>
+
+<pre><code>$ curl -X POST http://localhost:5555/containers/12345/start
+</code></pre>
+
+<p>To stop a container: <code>POST /containers/{id}/stop</code></p>
+
+<pre><code>$ curl -X POST http://localhost:5555/containers/12345/stop
+</code></pre>
+
+<h3 id="docker-specific-api-use-cases">Docker-Specific API Use Cases</h3>
+
+<p>There are some issues that are quite specific to Docker which the Docker REST API could be used to help solve. For example, to avoid image and container buildup, you can create an automation with the API that cleans up stale images and stopped containers. This can be complemented by also checking disk space (which is directly available with some storage drivers).</p>
+
+<p>It could also be useful to implement an auto-upgrade mechanism that periodically updates the images that you have locally by notifying when new images are available and restarting containers. For data stores, this requires extra care (i.e. making sure that the data is stored in a volume and that the volume is passed from the old to the new container).</p>
+
+<h3 id="other-api-use-cases">Other API Use Cases</h3>
+
+<p>You can also use the Docker REST API to accomplish more generic tasks, such as automating the build process. While there already exists platforms that automatically builds from images and then pushes them to a Git repository, you could customize this whole process by implementing an automation that rebuilds each image on a daily basis to see if it has changed from the day before in order to detect if the build process depends on external sources. For example, if a package that the image uses changes overnight, then the daily build will also change even if the code repository didn’t change and this detection can be pretty useful.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                    <a rel="next" href="https://infoverload.github.io/2018/04/02/exploring-docker-logs/" id="next">
+                        <span class="nav-title nav-title-next">Newer</span> &rarr;
+                    </a>
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/02/02/how-does-ping-work/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

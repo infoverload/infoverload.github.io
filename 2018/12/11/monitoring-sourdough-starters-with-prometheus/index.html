@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Monitoring Sourdough Starters with Prometheus &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    11. December 2018
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Monitoring Sourdough Starters with Prometheus</h1>
+                <div itemprop="articleBody">
+                    
+
+<p>I have many different interests, including baking, open-source software, and more recently, systems monitoring and learning Go.  As a way for me to expand my practical knowledge on each item, I devised a fun little project that leverages sensors, Raspberry Pis, and <a href="https://prometheus.io">Prometheus</a> to improve my sourdough breadmaking process. I will explain the inspiration behind it, go through the steps I took to set up the project, and detail what I learned.  Disclaimer: it is still a work in progress!</p>
+
+<h3 id="sourdough-bread-and-the-difficulty-with-maintaining-natural-yeast">Sourdough Bread and the Difficulty with Maintaining Natural Yeast</h3>
+
+<p>A while ago, I became interested in the art of making one’s own sourdough bread.  This is a type of bread that, due to its fermentation process, is a much healthier alternative to the store-bought bread that we are used to seeing. The naturally occurring acids and long fermentation help to break down the proteins and gluten, making it more digestible and easy for the body to absorb.</p>
+
+<p><img src="https://cdn.pbrd.co/images/HR7tyY3.jpg" alt="Sourdough Culture" /></p>
+
+<p>Sourdough is the traditional way of making bread until around a hundred years ago.  The process involves cultivating your own wild yeast and allowing time for fermentation.  The sourdough bread-making process is a fascinating combination of biology and physics, but working with natural starters can be difficult since they are very sensitive to temperature and humidity. The cultures are very finicky and can easily turn to mold or not grow as fast as you would like. Parameters such as temperature and humidity need to be closely observed and monitored&hellip;perhaps with a systems monitoring tool!</p>
+
+<h3 id="the-prometheus-project">The Prometheus Project</h3>
+
+<p>Prometheus is an open-source systems monitoring and alerting toolkit written in Go. It is particularly suitable for containers and cloud workloads where instances can have a short lifespan, which made it very popular in the last few years. It is the second project in the CNCF to <a href="https://www.cncf.io/announcement/2018/08/09/prometheus-graduates/">graduate</a>, the first one being Kubernetes.  It’s ecosystem consists of the server itself, a time-series database, it’s own query language, an alert manager, client libraries, and special exporters.  It has a dimensional data model and dashboarding and alerting all based on the same query language. The Prometheus server collects time series metrics from instrumented targets, stores them and makes them query-able with their query language.  You can use the information for dashboards and alerting.</p>
+
+<h3 id="observability-in-the-kitchen">Observability in the Kitchen</h3>
+
+<p>I decided it would be fun and useful to leverage Prometheus to monitor the humidity and temperature of my sourdough starters and maybe gain insight into how temperature and humidity affects the growth of my cultures. Perhaps it can improve the breadmaking process.</p>
+
+<p>The Prometheus server scales up and down really well and can run efficiently on something like a Raspberry Pi. So I decided to use <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry Pis</a> and ordered some <a href="https://www.ebay.com/itm/Breakout-Temperature-Humidity-Barometric-Pressure-BME280-Digital-Sensor-Module-/401000227934">Bosch BME280</a> Temperature Humidity Barometric Pressure Sensor Modules with I2C.</p>
+
+<p>The plans is to have the Pi run a custom Prometheus node exporter, collecting temperature and humidity metrics from the sensor and making them available for scraping by the Prometheus server.</p>
+
+<h3 id="setting-up-the-hardware">Setting up the Hardware</h3>
+
+<p>I connected the sensor to the Pi according to this diagram:</p>
+
+<table>
+<thead>
+<tr>
+<th>BME280</th>
+<th>Desc</th>
+<th>GPIO Header Pins</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>VIN</td>
+<td>3.3V</td>
+<td>P1-01</td>
+</tr>
+
+<tr>
+<td>GND</td>
+<td>Ground</td>
+<td>P1-06</td>
+</tr>
+
+<tr>
+<td>SCL</td>
+<td>I2C SCL</td>
+<td>P1-05</td>
+</tr>
+
+<tr>
+<td>SDA</td>
+<td>I2C SDA</td>
+<td>P1-03</td>
+</tr>
+</tbody>
+</table>
+
+<p>Then I installed <a href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian</a> on the Pi and enabled the I2C interface.  I2C is a protocol that allows one device to exchange data with one or more connected devices.</p>
+
+<h3 id="prometheus-exporters">Prometheus Exporters</h3>
+
+<p>Now I need a way to export metrics in the Prometheus format for the sensor, which means that I need a Prometheus exporter. Exporters are tools that let you translate metrics from other systems into a format that Prometheus can understand. You may be able to find an exporter for your system on the Prometheus <a href="https://prometheus.io/docs/instrumenting/exporters/">website</a>, by searching the Internet, <a href="https://groups.google.com/forum/#!forum/prometheus-announce">mailing list</a>, or looking on GitHub. You can also write your own exporter. That&rsquo;s what I did, and while I did it in Go, it can be done in any programming language.</p>
+
+<h3 id="writing-an-exporter-in-go">Writing an Exporter in Go</h3>
+
+<p>Here is an overview of how to write a Prometheus exporter for the BME280 sensor in Go.  I need to import the <a href="https://github.com/prometheus/client_golang">Prometheus Go client library</a> and I will also make use of the <a href="https://gobot.io/">Gobot framework</a> in order to control the sensor and the Pi.</p>
+
+<pre><code>import (
+	&quot;log&quot;
+	&quot;net/http&quot;
+
+	&quot;github.com/prometheus/client_golang/prometheus&quot;
+	&quot;github.com/prometheus/client_golang/prometheus/promhttp&quot;
+	&quot;gobot.io/x/gobot/drivers/i2c&quot;
+	&quot;gobot.io/x/gobot/platforms/raspi&quot;
+)
+</code></pre>
+
+<p>Then I create a collector type that can be made aware to the Prometheus client.</p>
+
+<pre><code>type collector struct {
+	sensorDriver *i2c.BME280Driver
+}
+</code></pre>
+
+<p>In Go your collectors must implement the <a href="https://github.com/prometheus/client_golang/blob/master/prometheus/collector.go">prometheus.Collector</a> interface. That is to say, the collectors must be objects with the <code>Describe</code> and <code>Collect</code> methods with a specific signature.</p>
+
+<p>The <code>Describe</code> method returns a description of the metrics that it will produce, in particular the metric name, label names, and help string.  This method is used to avoid duplicate registration of metrics and is called at registration time.</p>
+
+<pre><code>var (
+	temperatureDesc = prometheus.NewDesc(&quot;bme280_temperature_celsius&quot;, &quot;Temperature in celsius degree&quot;, nil, nil)
+	humidityDesc    = prometheus.NewDesc(&quot;bme280_humidity_percentage&quot;, &quot;Humidity in percentage of relative humidity&quot;, nil, nil)
+)
+
+func (c collector) Describe(ch chan&lt;- *prometheus.Desc) {
+	ch &lt;- temperatureDesc
+	ch &lt;- humidityDesc
+}
+</code></pre>
+
+<p>The <code>Collect</code> method fetches all the data you need from the application instance and sends the metrics back to the client library. Prometheus client libraries offer four core metric types (counters, gauges, histograms, summaries) but only the gauge is needed for this exporter since the metric needs to represent a value that can either go up or down. These metrics will then be returned by the scrape of the <code>/metrics</code> endpoint.</p>
+
+<p>Exporters don&rsquo;t need to constantly track the value of their metrics internally. Instead, all they need to do is provide the current value whenever they are accessed by the Prometheus server. This means that our code doesn&rsquo;t need to create (and update) a metric variable. Instead, each time our <code>Collect</code> method is called, it will create a throwaway constant metric holding the current value. It turns out that the Prometheus client library provides a method to precisely create such a constant metric: <a href="https://github.com/prometheus/client_golang/blob/master/prometheus/value.go">MustNewConstMetric</a>.</p>
+
+<pre><code>func (c collector) Collect(ch chan&lt;- prometheus.Metric) {
+	temperature, err := c.sensorDriver.Temperature()
+	if err != nil {
+		ch &lt;- prometheus.NewInvalidMetric(temperatureDesc, err)
+		return
+	}
+	ch &lt;- prometheus.MustNewConstMetric(temperatureDesc, prometheus.GaugeValue, float64(temperature))
+
+	humidity, err := c.sensorDriver.Humidity()
+	if err != nil {
+		ch &lt;- prometheus.NewInvalidMetric(humidityDesc, err)
+		return
+	}
+	ch &lt;- prometheus.MustNewConstMetric(humidityDesc, prometheus.GaugeValue, float64(humidity))
+}
+</code></pre>
+
+<p>Instantiate the Raspberry Pi adaptor and then the BME280 driver and start the driver.</p>
+
+<pre><code>rAdaptor := raspi.NewAdaptor()
+bme280 := i2c.NewBME280Driver(rAdaptor, i2c.WithBus(1), i2c.WithAddress(0x76))
+
+if err := bme280.Start(); err != nil {
+     log.Fatalf(&quot;Error starting driver: %s&quot;, err)
+}
+</code></pre>
+
+<p>Instantiate the custom collector object and register it with the default registry offered by the client library.  During scrape time, each collector registered in a registry is collected (i.e. asked for its metrics).  These metrics will be returned by the scrape of the <code>/metrics</code> endpoint.</p>
+
+<pre><code>registry := prometheus.NewRegistry()
+collector := &amp;collector{sensorDriver: bme280}
+registry.MustRegister(collector)
+</code></pre>
+
+<p>Then set up an HTTP handler and expose the standard <code>/metrics</code> endpoint and start listening for HTTP connections.</p>
+
+<pre><code>http.Handle(&quot;/metrics&quot;, promhttp.Handler())
+log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+</code></pre>
+
+<h3 id="configuring-the-prometheus-server">Configuring the Prometheus Server</h3>
+
+<p>Before starting the server, we need to configure it.  A yaml file (<code>prometheus.yml</code>) is used to specify things such as what endpoints to scrape and how frequently to scrape it.</p>
+
+<pre><code>scrape_configs:
+  - job_name: 'bme280'
+    scrape_interval: 10s
+
+    static_configs:
+    - targets: 
+      - '192.168.0.100:8080'
+      - '192.168.0.101:8080'
+</code></pre>
+
+<h3 id="running-the-exporter-on-the-raspberry-pi">Running the Exporter on the Raspberry Pi</h3>
+
+<p>With the server and the custom exporter running, Prometheus will come over the network to scrape the metrics exported from the exporter running on the Raspberry Pi that is connected to the temperature and humidity sensor.</p>
+
+<p>It would be nice to have my custom exporter start automatically upon powering up the Raspberry Pi and there are a couple of ways to enable this. I decided to create a systemd unit since it seems to be the most flexible way to manage services that run in the background on a Linux system. It allows you to run services before the desktop environment starts, wait until you have access to other processes (e.g. networking, graphical desktop), or simply restart your program over and over again until it works.</p>
+
+<pre><code>[Unit]
+Description=Sourdough Prometheus Exporter
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+WorkingDirectory=/home/pi/go/src/github.com/sourdough-prometheus-exporter
+ExecStart=/home/pi/go/src/github.com/sourdough-prometheus-exporter/sourdough-prometheus-exporter
+User=pi
+Restart=always
+</code></pre>
+
+<h3 id="metrics-exposition">Metrics Exposition</h3>
+
+<p>When I run the exporter and go to the <code>/metrics</code> endpoint, I see something like this:</p>
+
+<pre><code># HELP bme280_humidity Humidity in percentage of relative humidity
+# TYPE bme280_humidity gauge
+bme280_humidity 49.532752990722656
+
+# HELP bme280_temperature_celsius Temperature in celsius degree
+# TYPE bme280_temperature_celsius gauge
+bme280_temperature_celsius 21.880083084106445
+</code></pre>
+
+<p>The exposition is in a line-by-line text-based <a href="https://github.com/prometheus/docs/blob/master/content/docs/instrumenting/exposition_formats.md">format</a> typically with a HELP and TYPE comment line for each metric.</p>
+
+<p>Just because metrics can be scraped does not mean that the format is compliant with the <a href="https://prometheus.io/docs/practices/naming/#metric-names">standards</a>.  You can run the <code>promtool</code> command-line utility that comes with Prometheus and use it to perform link checks on your metrics for consistency and correctness, by passing the metrics over stdin.</p>
+
+<p>Example:  <code>curl http://localhost:8080/metrics | promtool check metrics</code></p>
+
+<h3 id="dashboarding-promql-alertmanager">Dashboarding, PromQL, Alertmanager</h3>
+
+<p>Once the scraped data is stored in the time-series database, we can use it to create dashboards. Grafana is a popular choice and has support for querying Prometheus.  All you have to do is create a Prometheus data source in Grafana and you can start creating graphs by querying your scraped data.</p>
+
+<p><img src="https://cdn.pbrd.co/images/HR7eHyW.jpg" alt="Example Graph" />
+<a href="https://cdn.pbrd.co/images/HR7eHyW.jpg">enlarge</a></p>
+
+<p>PromQL is the Prometheus Query Language. It can help you answer a lot of ad-hoc questions about your system, but for this simple use case with one-dimensional gauges, I can just display the values as they are.</p>
+
+<p>In the Prometheus ecosystem, two components are involved in alerting: Prometheus and the Alertmanager. First you define alerting rules on the Prometheus server for it to periodically evaluate and fire off to the Alertmanager. The Alertmanager takes in all the alerts from Prometheus server(s), performs logic on them and converts them to notifications. I can create alerts for when the server is down or when the temperature or humidity hits a certain mark, etc.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>This project is still a work in progress but the process has been a really fun and useful way for me to learn more about sourdough breadmaking, Raspberry Pis, IoT, and Prometheus! There are still so many things about all of those items for me to discover and I have many ideas on how to build upon it.</p>
+
+<p><img src="https://cdn.pbrd.co/images/HR7sGfe.jpg" alt="Setup" /></p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/10/01/all-systems-go-2018/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

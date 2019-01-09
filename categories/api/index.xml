@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Api on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/categories/api/</link>
+    <description>Recent content in Api on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 02 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/categories/api/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Exploring the Docker API</title>
+      <link>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</guid>
+      <description>In this post, we are going to explore Docker&amp;rsquo;s API and see what we can do with it!
+Docker has become a popular solution for containerization needs and provide a lot of functionality surrounding run-of-the-mill tasks such as building images, running containers, and managing Docker on your machine. These are commonly done through Docker’s command line interface, which is actually a client that consumes a remote REST API provided by the Docker daemon.</description>
+    </item>
+    
+  </channel>
+</rss>

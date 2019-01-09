@@ -42,6 +42,25 @@ enlarge</description>
     </item>
     
     <item>
+      <title>Exploring Docker Logs</title>
+      <link>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/04/02/exploring-docker-logs/</guid>
+      <description>The mechanics of Docker logs are, by nature, quite different from VM logs and managing Docker logs can be complicated due to its dynamic and ephemeral nature. In the Docker universe, there are different types of logs to be mindful of: logs from the containerized applications and logs from the Docker daemon. In order to gain insight into the health of your containers, you need to understand the structure of Docker logs and what it tells you.</description>
+    </item>
+    
+    <item>
+      <title>Exploring the Docker API</title>
+      <link>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/03/02/exploring-the-docker-api/</guid>
+      <description>In this post, we are going to explore Docker&amp;rsquo;s API and see what we can do with it!
+Docker has become a popular solution for containerization needs and provide a lot of functionality surrounding run-of-the-mill tasks such as building images, running containers, and managing Docker on your machine. These are commonly done through Docker’s command line interface, which is actually a client that consumes a remote REST API provided by the Docker daemon.</description>
+    </item>
+    
+    <item>
       <title>How does ping work?</title>
       <link>https://infoverload.github.io/2018/02/02/how-does-ping-work/</link>
       <pubDate>Fri, 02 Feb 2018 00:00:00 +0000</pubDate>
