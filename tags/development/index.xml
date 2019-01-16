@@ -33,6 +33,15 @@ enlarge</description>
     </item>
     
     <item>
+      <title>GraphQL EU Conference 2018</title>
+      <link>https://infoverload.github.io/2018/06/02/graphql-eu-conference-2018/</link>
+      <pubDate>Sat, 02 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2018/06/02/graphql-eu-conference-2018/</guid>
+      <description>I had the wonderful opportunity to attend the GraphQL EU Conference in Berlin this summer, which is the second conference surrounding GraphQL. There were apparently double the amount of attendees this year compared to last year! There were a ton of interesting and exciting talks surrounding its current usage, and best practices and wisdom from companies who are already adopting GraphQL. I particularly enjoyed the talk &amp;ldquo;Revenge of the Monolith&amp;rdquo; by Nick Schrock, where he goes through the history of GraphQL at Facebook and how it came to be open-source and dispelled a bit of the hype over microservices.</description>
+    </item>
+    
+    <item>
       <title>RustFest Paris 2018</title>
       <link>https://infoverload.github.io/2018/06/02/rustfest-paris-2018/</link>
       <pubDate>Sat, 02 Jun 2018 00:00:00 +0000</pubDate>
