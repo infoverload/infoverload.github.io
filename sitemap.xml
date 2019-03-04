@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://infoverload.github.io/2019/02/20/exploring-kubernetes-and-helm/</loc>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</loc>
     <lastmod>2018-12-11T00:00:00+00:00</lastmod>
   </url>
@@ -109,7 +114,13 @@
   
   <url>
     <loc>https://infoverload.github.io/categories/development/</loc>
-    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/categories/devops/</loc>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -127,7 +138,7 @@
   
   <url>
     <loc>https://infoverload.github.io/tags/golang/</loc>
-    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -144,8 +155,20 @@
   </url>
   
   <url>
+    <loc>https://infoverload.github.io/tags/helm/</loc>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/</loc>
-    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/tags/kubernetes/</loc>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -199,7 +222,7 @@
   
   <url>
     <loc>https://infoverload.github.io/tags/open-source/</loc>
-    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -211,7 +234,7 @@
   
   <url>
     <loc>https://infoverload.github.io/post/</loc>
-    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

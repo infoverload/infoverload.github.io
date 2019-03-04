@@ -50,9 +50,18 @@
     <item>
       <title>Development</title>
       <link>https://infoverload.github.io/categories/development/</link>
-      <pubDate>Tue, 11 Dec 2018 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://infoverload.github.io/categories/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Devops</title>
+      <link>https://infoverload.github.io/categories/devops/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/categories/devops/</guid>
       <description></description>
     </item>
     

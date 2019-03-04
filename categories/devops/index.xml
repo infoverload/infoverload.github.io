@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Open Source on INFOVERLOAD</title>
-    <link>https://infoverload.github.io/tags/open-source/</link>
-    <description>Recent content in Open Source on INFOVERLOAD</description>
+    <title>Devops on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/categories/devops/</link>
+    <description>Recent content in Devops on INFOVERLOAD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 20 Feb 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://infoverload.github.io/tags/open-source/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://infoverload.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       <guid>https://infoverload.github.io/2019/02/20/exploring-kubernetes-and-helm/</guid>
       <description>As more developers work within distributed environments, tools like Kubernetes have become central to keeping application components standardized across dynamic build and production environments. While Kubernetes lets developers orchestrate large numbers of containers at scale, tools like Helm have become important when managing resources within Kubernetes clusters.
 When you are working with many resources and a sizable stack on Kubernetes, managing thousands of lines of YAML become difficult. This is where Helm comes in.</description>
-    </item>
-    
-    <item>
-      <title>Monitoring Sourdough Starters with Prometheus</title>
-      <link>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</link>
-      <pubDate>Tue, 11 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/</guid>
-      <description>I have many different interests, including baking, open-source software, and more recently, systems monitoring and learning Go. As a way for me to expand my practical knowledge on each item, I devised a fun little project that leverages sensors, Raspberry Pis, and Prometheus to improve my sourdough breadmaking process. I will explain the inspiration behind it, go through the steps I took to set up the project, and detail what I learned.</description>
     </item>
     
   </channel>

@@ -6,10 +6,20 @@
     <description>Recent content in Golang on INFOVERLOAD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://infoverload.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Exploring Kubernetes and Helm</title>
+      <link>https://infoverload.github.io/2019/02/20/exploring-kubernetes-and-helm/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2019/02/20/exploring-kubernetes-and-helm/</guid>
+      <description>As more developers work within distributed environments, tools like Kubernetes have become central to keeping application components standardized across dynamic build and production environments. While Kubernetes lets developers orchestrate large numbers of containers at scale, tools like Helm have become important when managing resources within Kubernetes clusters.
+When you are working with many resources and a sizable stack on Kubernetes, managing thousands of lines of YAML become difficult. This is where Helm comes in.</description>
+    </item>
     
     <item>
       <title>Monitoring Sourdough Starters with Prometheus</title>

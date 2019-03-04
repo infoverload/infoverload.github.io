@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Exploring Kubernetes and Helm &middot; INFOVERLOAD</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Infoverload">
+    <meta name="description" content="My personal blog">
+    <meta name="generator" content="Hugo 0.40.2" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://infoverload.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="https://infoverload.github.io/img/avatar.jpg" title="Infoverload">
+    </figure>
+    <div class="bio">
+        
+        <h1>Hi, I&#39;m Daisy</h1>
+        
+        
+        <p>Here is a place for my random musings!</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="https://infoverload.github.io/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+        <h6>Follow me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//twitter.com/1nfoverload">Twitter</a></li>
+        
+            <li><a target="_blank" href="//github.com/infoverload">GitHub</a></li>
+        
+        </ul>        
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="https://infoverload.github.io/">INFOVERLOAD</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    20. February 2019
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Exploring Kubernetes and Helm</h1>
+                <div itemprop="articleBody">
+                    
+
+<p>As more developers work within distributed environments, tools like <a href="https://kubernetes.io/">Kubernetes</a> have become central to keeping application components standardized across dynamic build and production environments. While Kubernetes lets developers orchestrate large numbers of containers at scale, tools like <a href="https://helm.sh/">Helm</a> have become important when managing resources within Kubernetes clusters.</p>
+
+<p>When you are working with many resources and a sizable stack on Kubernetes, managing thousands of lines of YAML become difficult.  This is where Helm comes in.  Helm is a package manager for Kubernetes that collects sets of templatized Kubernetes manifest files into a unified bundle called a chart, which is organized and versioned.  Once the Helm client deploys the chart into the Kubernetes cluster, it can manage the upgrade and rollback of these bundles.</p>
+
+<p>In this post, we are going to explore Helm by setting up WordPress with an external MySQL database on Kubernetes using the Helm package manager.  We will begin by configuring some permissions with Helm’s server side component (Tiller) as well as our MySQL installation, inspect some Helm charts, and then install WordPress onto the Kubernetes cluster using the Helm client and connect to an external MySQL database.  To conclude, we will visit our deployed WordPress application and check the status of our deployment.</p>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<p>To follow along, you will need to install the following command line tools and services. These could be installed on your local development machine, or on a server that you’ve set up as your development environment:</p>
+
+<ul>
+<li>A Kubernetes 1.10+ cluster with role-based access control (RBAC) enabled.</li>
+<li>The <code>kubectl</code> command-line tool installed on your local machine or development server and configured to connect to your cluster.</li>
+<li>Helm installed on your local machine or server, and Tiller installed on your cluster.</li>
+<li>MySQL installed on a server.</li>
+</ul>
+
+<p>Once you have these components set up, you&rsquo;re ready to begin.</p>
+
+<h3 id="changing-account-permissions">Changing Account Permissions</h3>
+
+<h4 id="helm-permissions">Helm Permissions</h4>
+
+<p>The Helm permission model requires us to adjust its default setup so that it can work with the new permission structure in Kubernetes 1.6+, which has RBAC turned on by default.  As a result, the service account for each namespace does not have cluster-wide access out of the box and so Tiller (running as a pod in the system-wide <code>kube-system</code> namespace) does not have the permission to install and manage cluster resources. To work around this issue, we can elevate permissions for the default service account in the <code>kube-system</code> namespace to be cluster-wide:</p>
+
+<pre><code class="language-command">kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+</code></pre>
+
+<p>This creates a <strong>ClusterRoleBinding</strong> with <strong>cluster-admin</strong> access levels for our specified service account and also grants the <strong>cluster-admin</strong> role to it, which permits resource installation across all namespaces.</p>
+
+<p><strong>Note:</strong> On large scale production-level deployments, you might consider creating different service accounts, roles, and role bindings for different users/teams, but defining the exact roles and permissions on your cluster is out of the scope of this tutorial.  You can learn more about Kubernetes&rsquo; RBAC model <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">in the official documentation</a>.  The above command suffices for exploring Helm or for development clusters.</p>
+
+<p>You should now be able to successfully use Helm to install your packages now that Tiller has broadened permissions.</p>
+
+<h4 id="mysql-permissions">MySQL Permissions</h4>
+
+<p>You should have MySQL installed on a server independent of your Kubernetes cluster.  It is generally a good idea to keep your database independent of your cluster because Kubernetes’ architecture supports a very ephemeral environment where pods and containers are dynamically created and destroyed all the time, which isn’t ideal for keeping state.</p>
+
+<p>Before we can move forward with our WordPress installation, we need to make sure that our MySQL server and database can be accessed remotely.</p>
+
+<p>Create a database for our installation:</p>
+
+<pre><code class="language-custom_prefix(mysql&gt;)">CREATE DATABASE wpdb;
+</code></pre>
+
+<p>Create a user with a password and give the user all privileges to the database we just created, as well as allowing access if the user connects from anywhere. You can also fine-tune these privileges as necessary later on.</p>
+
+<pre><code class="language-custom_prefix(mysql&gt;)">GRANT ALL ON wpdb.* TO 'sammy'@'%' IDENTIFIED BY 'password';
+</code></pre>
+
+<p><strong>Note:</strong> The following instructions are based on a MySQL installation on Ubuntu 18.04.</p>
+
+<p>To allow for outside connections to your database, edit your MySQL config file by commenting out the bind address that points to localhost. You can alternatively change it to <code>bind-address 0.0.0.0</code>.</p>
+
+<pre><code>[label /etc/mysql/mysql.conf.d/mysqld.cnf]
+...
+# bind-address 127.0.0.1 
+...
+</code></pre>
+
+<p>Restart the MySQL service:</p>
+
+<pre><code class="language-command">sudo systemctl restart mysql.service
+</code></pre>
+
+<p>If there is a firewall, open up the default port for MySQL (<code>:3306</code>) and then restart the service.</p>
+
+<pre><code class="language-command">sudo ufw allow 3306/tcp
+sudo systemctl restart ufw
+</code></pre>
+
+<p>Your MySQL server and database should allow for outside connections now.</p>
+
+<h3 id="understanding-charts-in-helm">Understanding Charts in Helm</h3>
+
+<p>A Helm chart is an archive of container definitions and configurations tailored for an application.  By default, Helm installs from a repository called <strong>stable</strong>, which contains many charts for many different types of workloads curated and created by the community.  You can also create and install a chart locally or create your own repository.</p>
+
+<p>If we go to the <a href="https://github.com/helm/charts/tree/master/stable/wordpress">stable/wordpress</a> repository, we can see all the YAML files that make up the bundle.  When a chart is installed by Helm, the values in <strong>values.yaml</strong> are replaced inside the templates, and the manifests are created, which define resources in Kubernetes.  Helm will be able to manage the maintenance of this application once the chart is deployed in your cluster.</p>
+
+<p>We can search for a WordPress chart using Helm&rsquo;s CLI tool:</p>
+
+<pre><code class="language-command">helm search wordpress
+</code></pre>
+
+<pre><code>[secondary_label Output]
+NAME              CHART VERSION   APP VERSION   DESCRIPTION                                             
+stable/wordpress  5.1.3           5.0.3      	Web publishing platform for building blogs and websites.
+</code></pre>
+
+<p>The output indicates that there is currently one chart in the default repository that contain the keyword &ldquo;wordpress&rdquo;.</p>
+
+<p>To learn about the details of this chart and about its configuration options, you can read the information on <a href="https://github.com/helm/charts/tree/master/stable/wordpress#configuration">their GitHub repo</a> or use the <code>inspect</code> command:</p>
+
+<pre><code class="language-command">helm inspect stable/wordpress
+</code></pre>
+
+<pre><code>[secondary_label Output]
+appVersion: 5.0.3
+description: Web publishing platform for building blogs and websites.
+engine: gotpl
+home: http://www.wordpress.com/
+…
+
+## Configuration
+
+The following table lists the configurable parameters of the WordPress chart and their default values.
+
+|          Parameter          |              Description             |                    Default                     |
+|-----------------------------|--------------------------------------|------------------------------------------------|
+...
+| `mariadb.enabled`           | Deploy MariaDB container(s)          | `true`                                         |
+| `mariadb.rootUser.password` | MariaDB admin password               | `nil`                                          |
+| `mariadb.db.name`           | Database name to create              | `bitnami_wordpress`                            |
+| `mariadb.db.user`           | Database user to create              | `bn_wordpress`                                 |
+| `mariadb.db.password`       | Password for the database            | _random 10 character long alphanumeric string_ |
+| `externalDatabase.host`     | Host of the external database        | `localhost`                                    |
+| `externalDatabase.user`     | Existing username in the external db | `bn_wordpress`                                 |
+| `externalDatabase.password` | Password for the above username      | `nil`                                          |
+| `externalDatabase.database` | Name of the existing database        | `bitnami_wordpress`                            |
+| `externalDatabase.port`     | Database port number                 | `3306`                                         |
+...
+</code></pre>
+
+<p>There is a wealth of information here, but for our goal, the main items we want to note is that the WordPress chart uses MariaDB by default (which we want to change) and that there are configurable options to connect to an external database (which is exactly what we want to do).</p>
+
+<h3 id="installing-wordpress-chart-that-connects-to-external-mysql-server">Installing WordPress Chart that Connects to External MySQL Server</h3>
+
+<p>We are going to create a namespace in Kubernetes for our WordPress application to keep things organized. Otherwise it will go into the <code>default</code> namespace.  We will also give our installation release a name to avoid being assigned a randomly generated one by Helm.  Then we will disable MariaDB and supply the information to our external MySQL database.</p>
+
+<p>The following command will install and run WordPress in a container in a Kubernetes pod with our specified requirements and configurations:</p>
+
+<pre><code>$ helm install stable/wordpress \
+    --set mariadb.enabled=false \
+    --set externalDatabase.host=&lt;^&gt;your_server_ip&lt;^&gt; \
+    --set externalDatabase.user=&lt;^&gt;sammy&lt;^&gt; \
+    --set externalDatabase.password=&lt;^&gt;password&lt;^&gt; \
+    --set externalDatabase.database=&lt;^&gt;wpdb&lt;^&gt; \
+    --set externalDatabase.port=3306 \
+    --name wordpress \
+    --namespace wordpress
+</code></pre>
+
+<pre><code>[secondary_label Output]
+NAME:   wordpress
+LAST DEPLOYED: Fri Feb  8 10:25:35 2019
+NAMESPACE: wordpress
+STATUS: DEPLOYED
+
+RESOURCES:
+==&gt; v1/Secret
+NAME                   TYPE      DATA  AGE
+wordpress-externaldb   Opaque    1     1s
+wordpress-wordpress    Opaque    1     1s
+
+==&gt; v1/PersistentVolumeClaim
+NAME                 STATUS   VOLUME            CAPACITY  ACCESS MODES  STORAGECLASS      AGE
+wordpress-wordpress  Pending  do-block-storage  1s
+
+==&gt; v1/Service
+NAME                 TYPE          CLUSTER-IP     EXTERNAL-IP     PORT(S)                     AGE
+wordpress-wordpress  LoadBalancer  10.245.47.65   &lt;pending&gt;       80:30139/TCP,443:30901/TCP  1s
+
+==&gt; v1beta1/Deployment
+NAME                 DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+wordpress-wordpress  1        1        1           0          1s
+
+==&gt; v1/Pod(related)
+NAME                                  READY  STATUS   RESTARTS  AGE
+wordpress-wordpress-75c6c8b68f-5256q  0/1    Pending  0         1s
+
+
+NOTES:
+1. Get the WordPress URL:
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        Watch the status with: 'kubectl get svc --namespace wordpress -w wordpress-wordpress'
+  export SERVICE_IP=$(kubectl get svc --namespace wordpress wordpress-wordpress --template &quot;{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}&quot;)
+  echo &quot;WordPress URL: http://$SERVICE_IP/&quot;
+  echo &quot;WordPress Admin URL: http://$SERVICE_IP/admin&quot;
+
+2. Login with the following credentials to see your blog
+
+  echo Username: user
+  echo Password: $(kubectl get secret --namespace wordpress wordpress-wordpress -o jsonpath=&quot;{.data.wordpress-password}&quot; | base64 --decode)
+</code></pre>
+
+<p>We receive a lot of status back from Helm, which tells us what it has done and created.  Namely, it created a service and a deployment and from the deployment it created a pod.  The NOTES section provides us with useful information about how to access our WordPress site.  Run the specified commands to obtain the IP address to your application as well as the login credentials.</p>
+
+<p>Note that you can also set the login password with the <code>--set wordpressPassword=password</code> option upon installation.</p>
+
+<p>It will take a few minutes for WordPress to finish provisioning.  In the meantime, list the applications that have been installed by Helm onto your cluster:</p>
+
+<pre><code class="language-command">helm list
+</code></pre>
+
+<pre><code>[secondary_label Output]
+NAME        REVISION   UPDATED       	         STATUS     CHART          	    APP VERSION	   NAMESPACE
+wordpress   1          Fri Feb  8 10:25:35 2019	 DEPLOYED   wordpress-5.1.3     5.0.3      	   wordpress
+</code></pre>
+
+<p>When you install a chart with Helm, it is called a release and gets assigned a version (REVISION).  If you release it again, it will increment the version and only update the resources that has changed.</p>
+
+<p>List the pods in our application’s namespace:</p>
+
+<pre><code class="language-command">kubectl get pods --namespace wordpress
+</code></pre>
+
+<pre><code>[secondary_label Output]
+NAME                                   READY   STATUS    RESTARTS   AGE
+wordpress-wordpress-75c6c8b68f-5256q   1/1     Running   3          22m
+</code></pre>
+
+<p>Check the status of our deployment:</p>
+
+<pre><code class="language-command">kubectl get deployments --namespace wordpress
+</code></pre>
+
+<pre><code>[secondary_label Output]
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+wordpress-wordpress   1/1     1            1           23m
+</code></pre>
+
+<p>Now that everything looks to be up and running, you can navigate to your WordPress site, log into the control panel and start customizing your site that is now running on a Kubernetes cluster.</p>
+
+<p>In sum, we have demonstrated how to install WordPress onto a Kubernetes cluster using the Helm package manager.  We have connected an external MySQL database to our WordPress application by setting the appropriate configuration options upon issuing <code>helm install</code>.  With our WordPress running on Kubernetes, we can now host a highly available and scalable application. :)</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                
+
+                
+                
+                    <a rel="prev" href="https://infoverload.github.io/2018/12/11/monitoring-sourdough-starters-with-prometheus/" id="prev">
+                        &larr; <span class="nav-title nav-title-prev">Older</span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Powered by <a href="//gohugo.io">HUGO</a> - © 2018</small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://infoverload.github.io/js/main.js"></script>
+
+
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
