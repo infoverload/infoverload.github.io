@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://infoverload.github.io/2019/07/19/how-to-build-a-grpc-server-and-client-in-typescript/</loc>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/2019/02/20/exploring-kubernetes-and-helm/</loc>
     <lastmod>2019-02-20T00:00:00+00:00</lastmod>
   </url>
@@ -114,7 +119,7 @@
   
   <url>
     <loc>https://infoverload.github.io/categories/development/</loc>
-    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -155,6 +160,12 @@
   </url>
   
   <url>
+    <loc>https://infoverload.github.io/tags/grpc/</loc>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://infoverload.github.io/tags/helm/</loc>
     <lastmod>2019-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -162,7 +173,7 @@
   
   <url>
     <loc>https://infoverload.github.io/</loc>
-    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -234,7 +245,7 @@
   
   <url>
     <loc>https://infoverload.github.io/post/</loc>
-    <lastmod>2019-02-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -271,6 +282,12 @@
   <url>
     <loc>https://infoverload.github.io/tags/templates/</loc>
     <lastmod>2018-01-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://infoverload.github.io/tags/typescript/</loc>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

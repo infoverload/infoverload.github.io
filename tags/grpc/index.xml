@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Grpc on INFOVERLOAD</title>
+    <link>https://infoverload.github.io/tags/grpc/</link>
+    <description>Recent content in Grpc on INFOVERLOAD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://infoverload.github.io/tags/grpc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to build a gRPC server and client in TypeScript</title>
+      <link>https://infoverload.github.io/2019/07/19/how-to-build-a-grpc-server-and-client-in-typescript/</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://infoverload.github.io/2019/07/19/how-to-build-a-grpc-server-and-client-in-typescript/</guid>
+      <description>gRPC gRPC is an open-source RPC framework that makes communication over the network performant and scalable by taking advantage of binary formats through leveraging HTTP/2 features for transporting and using protocol buffers (out of the box) for serializing data. It supports generating server and client bindings in many languages across many platforms. Common use cases include connecting microservices, connecting mobile devices to backend services, and optimizing container to container communication.</description>
+    </item>
+    
+  </channel>
+</rss>
